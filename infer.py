@@ -15,9 +15,10 @@ if __name__ == '__main__':
     model = Model(args)
     model = model.cuda()
     model_dict = model.load_state_dict(
-        {k.replace('module.', ''): v for k, v in torch.load(args.model_dir).items()})
+        {k.replace('module.', ''): v for k, v in torch.load('ckpt/macil_sd.pkl').items()})
     gt = np.load(args.gt)
     st = time.time()
-    av_auc, _ = test(test_loader, model, None, gt, 0)
-    print('Time:{}'.format(time.time() - st))
-    print('offline av_auc:{0:.4}\n'.format(av_auc))
+    message, message_frames = test(test_loader, model, None, gt, 0)
+    time_elapsed = time.time() - st
+    print(' {}. {} \n'.format( message, message_frames))
+    print('Test complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
