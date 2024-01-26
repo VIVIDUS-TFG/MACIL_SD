@@ -15,7 +15,8 @@ def avce_test(dataloader, model_av, model_v, gt, e):
             _, _, _, av_logits, audio_rep, visual_rep = model_av(f_a, f_v, seq_len=None)
             av_logits = torch.squeeze(av_logits)
             av_logits = torch.sigmoid(av_logits)
-            av_logits = torch.mean(av_logits, 0)      # 5-crop
+            if av_logits.dim() > 1: # 5-crop
+                av_logits = torch.mean(av_logits, 0)
             pred = torch.cat((pred, av_logits))
 
             visual_rep = torch.mean(visual_rep, 0)
