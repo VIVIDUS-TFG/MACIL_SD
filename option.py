@@ -8,7 +8,7 @@ parser.add_argument('--audio-list', default='list/audio.list', help='list of aud
 parser.add_argument('--test-rgb-list', default='list/rgb_test.list', help='list of test rgb features ')
 parser.add_argument('--test-flow-list', default='list/flow_test.list', help='list of test flow features')
 parser.add_argument('--test-audio-list', default='list/audio_test.list', help='list of test audio features')
-parser.add_argument('--model_dir', default='ckpt/macil_sd.pkl', help='ckpt dir')
+parser.add_argument('--model_dir', default='macil_sd.pkl', help='ckpt dir')
 parser.add_argument('--gt', default='list/gt.npy', help='file of ground truth ')
 parser.add_argument('--gpus', default='0', type=str,  help='gpus')
 parser.add_argument('--lr', type=float, default=0.0004, help='learning rate (default: 0.0001)')
