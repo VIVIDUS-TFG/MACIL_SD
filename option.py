@@ -1,6 +1,7 @@
 import argparse
 
 parser = argparse.ArgumentParser(description='MACIL_SD')
+parser.add_argument('--evaluate', default='false', help='to infer a video or evaluate model metrics: (false or true)')
 parser.add_argument('--modality', default='MIX2', help='the type of the input, AUDIO,RGB,FLOW, MIX1, MIX2, or MIX3, MIX_ALL')
 parser.add_argument('--rgb-list', default='list/rgb.list', help='list of rgb features ')
 parser.add_argument('--flow-list', default='list/flow.list', help='list of flow features')

@@ -18,7 +18,7 @@ if __name__ == '__main__':
         {k.replace('module.', ''): v for k, v in torch.load('ckpt/macil_sd.pkl').items()})
     gt = np.load(args.gt)
     st = time.time()
-    message, message_second, message_frames = test(test_loader, model, None, gt, 0)
+    message, message_second, message_frames = test(test_loader, model, None, gt, 0, args)
     time_elapsed = time.time() - st
     print(message + message_frames)
     print(message + message_second)
