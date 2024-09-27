@@ -31,7 +31,7 @@ class Dataset(data.Dataset):
         # print(len(self.audio_list))
         # print(len(self.list))
         f_v = np.array(np.load(self.list[index].strip('\n')), dtype=np.float32)
-        f_a = np.array(np.load(self.audio_list[index//5].strip('\n')), dtype=np.float32)
+        f_a = np.array(np.load(self.audio_list[index].strip('\n')), dtype=np.float32)
         if f_v.shape[0] != f_a.shape[0]:
                 min_length = min(f_v.shape[0], f_a.shape[0])
                 f_v = f_v[:min_length, :]
