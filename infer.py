@@ -14,9 +14,16 @@ if __name__ == '__main__':
                              batch_size=1, shuffle=False,
                              num_workers=args.workers, pin_memory=True)
     model = Model(args)
-    model = model.cuda()
-    model_dict = model.load_state_dict(
-        {k.replace('module.', ''): v for k, v in torch.load('ckpt/macil_sd.pkl').items()})
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    model = model.to(device)
+
+    if device.type == 'cpu':
+        model_dict = model.load_state_dict(
+             {k.replace('module.', ''): v for k, v in torch.load('ckpt/macil_sd.pkl', map_location=torch.device('cpu')).items()})
+    else:
+        model_dict = model.load_state_dict(
+            {k.replace('module.', ''): v for k, v in torch.load('ckpt/macil_sd.pkl').items()})
+    
     gt = np.load(args.gt)
     st = time.time()
     results = test(test_loader, model, None, gt, 0, args)

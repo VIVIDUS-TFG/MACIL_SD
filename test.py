@@ -7,12 +7,13 @@ import os
 def avce_test(dataloader, model_av, model_v, gt, e, args):
     with torch.no_grad():
         model_av.eval()
-        pred = torch.zeros(0).cuda()
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        pred = torch.zeros(0).to(device)
         if model_v is not None:
             model_v.eval()
-
+        
         for i, (f_v, f_a) in enumerate(dataloader):
-            f_v, f_a = f_v.cuda(), f_a.cuda()
+            f_v, f_a = f_v.to(device), f_a.to(device)
             _, _, _, av_logits, audio_rep, visual_rep = model_av(f_a, f_v, seq_len=None)
             av_logits = torch.squeeze(av_logits)
             av_logits = torch.sigmoid(av_logits)

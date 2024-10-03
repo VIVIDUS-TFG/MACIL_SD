@@ -34,8 +34,9 @@ class Att_MMIL(nn.Module):
         self.fc = nn.Linear(input_dim, num_classes)
 
     def clas(self, logits, seq_len):
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         logits = logits.squeeze()
-        instance_logits = torch.zeros(0).cuda()  # tensor([])
+        instance_logits = torch.zeros(0).to(device)  # tensor([])
         for i in range(logits.shape[0]):
             if seq_len is None:
                 tmp = torch.mean(logits[i]).view(1)
