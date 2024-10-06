@@ -8,8 +8,8 @@ class Dataset(data.Dataset):
     def __init__(self, args, transform=None, test_mode=False):
         self.modality = args.modality
         if test_mode:
-            self.rgb_list_file = args.test_rgb_list
-            self.audio_list_file = args.test_audio_list
+            self.rgb_list_file = args.rgb_list
+            self.audio_list_file = args.audio_list
         else:
             self.rgb_list_file = args.rgb_list
             self.audio_list_file = args.audio_list
@@ -31,11 +31,12 @@ class Dataset(data.Dataset):
         # print(len(self.audio_list))
         # print(len(self.list))
         f_v = np.array(np.load(self.list[index].strip('\n')), dtype=np.float32)
-        f_a = np.array(np.load(self.audio_list[index].strip('\n')), dtype=np.float32)
+        f_a = np.array(
+            np.load(self.audio_list[index].strip('\n')), dtype=np.float32)
         if f_v.shape[0] != f_a.shape[0]:
-                min_length = min(f_v.shape[0], f_a.shape[0])
-                f_v = f_v[:min_length, :]
-                f_a = f_a[:min_length, :]
+            min_length = min(f_v.shape[0], f_a.shape[0])
+            f_v = f_v[:min_length, :]
+            f_a = f_a[:min_length, :]
         if self.transform is not None:
             f_v = self.transform(f_v)
             f_a = self.transform(f_a)
